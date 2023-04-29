@@ -1,4 +1,4 @@
-- 👋 Hi, I’m @JaviSilva59
+- 👋 Hi, I’m Javi Silva
 - 👀 I’m interested in developing solutions related to Web Dev, Data mining/analytics.
 - 🌱 I’m currently learning PowerShell!
 - 💞️ I’m looking to collaborate on any projects related to Information Technology
