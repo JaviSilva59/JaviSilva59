@@ -1,0 +1,321 @@
+/****** Object:  StoredProcedure [dbo].[spValidateUser]    Script Date: 4/26/2022 10:40:08 AM ******/
+DROP PROCEDURE [dbo].[spValidateUser]
+GO
+/****** Object:  StoredProcedure [dbo].[spSelectVeteranStatus]    Script Date: 4/26/2022 10:40:08 AM ******/
+DROP PROCEDURE [dbo].[spSelectVeteranStatus]
+GO
+/****** Object:  StoredProcedure [dbo].[spSelectUserLocation]    Script Date: 4/26/2022 10:40:08 AM ******/
+DROP PROCEDURE [dbo].[spSelectUserLocation]
+GO
+/****** Object:  StoredProcedure [dbo].[spSelectItemOrdered]    Script Date: 4/26/2022 10:40:08 AM ******/
+DROP PROCEDURE [dbo].[spSelectItemOrdered]
+GO
+/****** Object:  StoredProcedure [dbo].[spOrders]    Script Date: 4/26/2022 10:40:08 AM ******/
+DROP PROCEDURE [dbo].[spOrders]
+GO
+/****** Object:  StoredProcedure [dbo].[spInsertUsers]    Script Date: 4/26/2022 10:40:08 AM ******/
+DROP PROCEDURE [dbo].[spInsertUsers]
+GO
+/****** Object:  StoredProcedure [dbo].[spInsertOrders]    Script Date: 4/26/2022 10:40:08 AM ******/
+DROP PROCEDURE [dbo].[spInsertOrders]
+GO
+/****** Object:  Table [dbo].[VeteranStatus]    Script Date: 4/26/2022 10:40:08 AM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[VeteranStatus]') AND type in (N'U'))
+DROP TABLE [dbo].[VeteranStatus]
+GO
+/****** Object:  Table [dbo].[UserMaster]    Script Date: 4/26/2022 10:40:08 AM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[UserMaster]') AND type in (N'U'))
+DROP TABLE [dbo].[UserMaster]
+GO
+/****** Object:  Table [dbo].[UserLocation]    Script Date: 4/26/2022 10:40:08 AM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[UserLocation]') AND type in (N'U'))
+DROP TABLE [dbo].[UserLocation]
+GO
+/****** Object:  Table [dbo].[Orders]    Script Date: 4/26/2022 10:40:08 AM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Orders]') AND type in (N'U'))
+DROP TABLE [dbo].[Orders]
+GO
+/****** Object:  Table [dbo].[ItemOrdered]    Script Date: 4/26/2022 10:40:08 AM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ItemOrdered]') AND type in (N'U'))
+DROP TABLE [dbo].[ItemOrdered]
+GO
+/****** Object:  Table [dbo].[inventory]    Script Date: 4/26/2022 10:40:08 AM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[inventory]') AND type in (N'U'))
+DROP TABLE [dbo].[inventory]
+GO
+/****** Object:  Table [dbo].[CustomOrder]    Script Date: 4/26/2022 10:40:08 AM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[CustomOrder]') AND type in (N'U'))
+DROP TABLE [dbo].[CustomOrder]
+GO
+/****** Object:  Database [inventorysunflower]    Script Date: 4/26/2022 10:40:08 AM ******/
+DROP DATABASE [inventorysunflower]
+GO
+/****** Object:  Database [inventorysunflower]    Script Date: 4/26/2022 10:40:08 AM ******/
+CREATE DATABASE [inventorysunflower]  (EDITION = 'Basic', SERVICE_OBJECTIVE = 'Basic', MAXSIZE = 2 GB) WITH CATALOG_COLLATION = SQL_Latin1_General_CP1_CI_AS;
+GO
+ALTER DATABASE [inventorysunflower] SET COMPATIBILITY_LEVEL = 150
+GO
+ALTER DATABASE [inventorysunflower] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [inventorysunflower] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [inventorysunflower] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [inventorysunflower] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [inventorysunflower] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [inventorysunflower] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [inventorysunflower] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [inventorysunflower] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [inventorysunflower] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [inventorysunflower] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [inventorysunflower] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [inventorysunflower] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [inventorysunflower] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [inventorysunflower] SET ALLOW_SNAPSHOT_ISOLATION ON 
+GO
+ALTER DATABASE [inventorysunflower] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [inventorysunflower] SET READ_COMMITTED_SNAPSHOT ON 
+GO
+ALTER DATABASE [inventorysunflower] SET  MULTI_USER 
+GO
+ALTER DATABASE [inventorysunflower] SET ENCRYPTION ON
+GO
+ALTER DATABASE [inventorysunflower] SET QUERY_STORE = ON
+GO
+ALTER DATABASE [inventorysunflower] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 7), DATA_FLUSH_INTERVAL_SECONDS = 900, INTERVAL_LENGTH_MINUTES = 60, MAX_STORAGE_SIZE_MB = 10, QUERY_CAPTURE_MODE = AUTO, SIZE_BASED_CLEANUP_MODE = AUTO, MAX_PLANS_PER_QUERY = 200, WAIT_STATS_CAPTURE_MODE = ON)
+GO
+/*** The scripts of database scoped configurations in Azure should be executed inside the target database connection. ***/
+GO
+-- ALTER DATABASE SCOPED CONFIGURATION SET MAXDOP = 8;
+GO
+/****** Object:  Table [dbo].[CustomOrder]    Script Date: 4/26/2022 10:40:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[CustomOrder](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[FirstName] [varchar](50) NOT NULL,
+	[LastName] [varchar](50) NOT NULL,
+	[Email] [varchar](50) NOT NULL,
+	[Comments] [varchar](max) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[inventory]    Script Date: 4/26/2022 10:40:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[inventory](
+	[id] [int] NULL,
+	[image] [varchar](max) NULL,
+	[price] [varchar](10) NULL,
+	[description] [varchar](max) NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ItemOrdered]    Script Date: 4/26/2022 10:40:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ItemOrdered](
+	[ItemID] [int] IDENTITY(1,1) NOT NULL,
+	[ItemType] [varchar](50) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ItemID] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Orders]    Script Date: 4/26/2022 10:40:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Orders](
+	[UserID] [int] IDENTITY(1,1) NOT NULL,
+	[FirstName] [varchar](50) NOT NULL,
+	[LastName] [varchar](50) NOT NULL,
+	[EmailUsername] [varchar](100) NOT NULL,
+	[Description] [varchar](500) NOT NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[UserLocation]    Script Date: 4/26/2022 10:40:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[UserLocation](
+	[LocationID] [int] IDENTITY(1,1) NOT NULL,
+	[LocationName] [varchar](50) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[LocationID] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[UserMaster]    Script Date: 4/26/2022 10:40:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[UserMaster](
+	[UserID] [int] IDENTITY(1,1) NOT NULL,
+	[FirstName] [varchar](50) NOT NULL,
+	[MiddleNameOrInitial] [varchar](50) NOT NULL,
+	[LastName] [varchar](50) NOT NULL,
+	[EmailUsername] [varchar](100) NOT NULL,
+	[UserPassword] [varbinary](max) NOT NULL,
+	[PasswordSalt] [char](100) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[UserID] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[VeteranStatus]    Script Date: 4/26/2022 10:40:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[VeteranStatus](
+	[VeteranID] [int] IDENTITY(1,1) NOT NULL,
+	[VeteranQuestion] [varchar](100) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[VeteranID] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  StoredProcedure [dbo].[spInsertOrders]    Script Date: 4/26/2022 10:40:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROCEDURE [dbo].[spInsertOrders] @FirstName varchar(50), @LastName varchar(50), @Email varchar(50), @Comments varchar(max)
+AS 
+BEGIN
+	INSERT INTO dbo.CustomOrder(
+		FirstName, LastName, Email, Comments)
+		VALUES(@FirstName,@LastName,@Email,@Comments)
+END
+GO
+/****** Object:  StoredProcedure [dbo].[spInsertUsers]    Script Date: 4/26/2022 10:40:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[spInsertUsers]
+@First varchar(50),
+@Middle varchar(50),
+@Last varchar(100),
+@Username varchar(100),
+@Password varchar(100),
+@UserID int output
+as
+BEGIN
+	DECLARE @randomText uniqueidentifier = NEWID();  
+	DECLARE @Salt AS CHAR(100)
+	SET @Salt = HASHBYTES('SHA2_256', CONVERT(CHAR(100), @randomText))
+
+	DECLARE @HashedPassword VARBINARY(max)
+	SET @hashedPassword = HASHBYTES('SHA2_256',CONCAT(@Salt, @Password))
+
+	INSERT INTO UserMaster
+	(FirstName, MiddleNameOrInitial, LastName, EmailUsername, UserPassword, PasswordSalt)
+	VALUES
+	(@First, @Middle, @Last, @Username, @HashedPassword, @Salt)
+
+	Set @UserID = SCOPE_IDENTITY();
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[spOrders]    Script Date: 4/26/2022 10:40:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[spOrders]
+as 
+BEGIN
+	SELECT *
+	FROM Orders	
+END
+GO
+/****** Object:  StoredProcedure [dbo].[spSelectItemOrdered]    Script Date: 4/26/2022 10:40:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[spSelectItemOrdered]
+as
+BEGIN
+	SELECT ItemID, ItemType
+	FROM ItemOrdered
+	Order BY ItemID
+END
+GO
+/****** Object:  StoredProcedure [dbo].[spSelectUserLocation]    Script Date: 4/26/2022 10:40:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[spSelectUserLocation]
+as
+BEGIN
+	SELECT LocationID, LocationName
+	FROM UserLocation
+	Order BY LocationID
+END
+GO
+/****** Object:  StoredProcedure [dbo].[spSelectVeteranStatus]    Script Date: 4/26/2022 10:40:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[spSelectVeteranStatus]
+as
+BEGIN
+	SELECT VeteranID, VeteranQuestion
+	FROM VeteranStatus
+	Order BY VeteranID
+END
+GO
+/****** Object:  StoredProcedure [dbo].[spValidateUser]    Script Date: 4/26/2022 10:40:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[spValidateUser]
+@Username varchar(100),
+@Password varchar(100)
+as 
+BEGIN
+	SELECT UserID, EmailUsername, FirstName, LastName, MiddleNameOrInitial
+	FROM userMaster
+	WHERE EmailUsername = @Username
+	AND UserPassword = HASHBYTES('SHA2_256',CONCAT(PasswordSalt, @Password))
+END
+GO
+ALTER DATABASE [inventorysunflower] SET  READ_WRITE 
+GO
