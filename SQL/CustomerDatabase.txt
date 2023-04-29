@@ -1,0 +1,21 @@
+DROP TABLE Customers;
+
+TRUNCATE TABLE Customers;
+
+CREATE TABLE Customers (
+CustomerID int NOT NULL PRIMARY KEY,
+FirstName varchar(255) NOT NULL,
+LastName varchar(255) NOT NULL,
+EmailAddress varchar(255) NOT NULL,
+Comments varchar(255) NULL
+);
+
+ALTER TABLE Customers
+ADD PRIMARY KEY (CustomerID);
+
+CREATE PROCEDURE ExportCustomers
+AS
+SELECT * FROM Customers
+GO;
+
+EXECUTE ExportCustomers;
