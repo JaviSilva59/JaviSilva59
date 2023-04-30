@@ -1,7 +1,7 @@
-- 👋 Hi, I’m Javi Silva
-- 👀 I’m interested in developing solutions related to Web Dev, Data mining/analytics.
+- 👋 Hi, I’m Javi Silva. I am a graduate with a Bachelor Degree in Business Administrations/Major in Management Information Systems/Minor in Management
+- 👀 I’m interested in finding new possibilities every day. 
 - 🌱 I’m currently learning PowerShell!
-- 💞️ I’m looking to collaborate on any projects related to Information Technology
+- 💞️ I’m looking to collaborate on any projects related to Information Technology or anything that comes my way.
 - 📫 How to reach me (javiersilva5901@gmail.com)
 
 <!---
