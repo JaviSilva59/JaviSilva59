@@ -1,0 +1,72 @@
+Machines
+Corp40 Machine 1:
+•	The machine is running Microsoft Server 2016 and is connected to switch 2, enabling communication with the router.
+•	This machine serves as a backbone for Active Directory, email, and web server.
+•	It handles port forwarding, as it holds the DNS records required for routing traffic to the appropriate destinations.
+•	Machine 1 operates within 40.128.0.1 SM, and the router as its default gateway.
+
+Corp40 Machine 2:
+•	Machine 2 is utilizing Ubuntu on the Linux system. 
+•	The primary function of this machine is to operate FTP.
+•	It is connected to switch 2, enabling communication with the router.
+•	Machine 2 is operating in 40.128.0.1 subnet, and its default gateway is the router.
+Corp40 Switch 2:
+•	The switch provides connectivity between Machine 1 and Machine 2 to the router. 
+•	The switch enables both machines to be simultaneously connected to the router. 
+
+Corp40 Router:
+•	The router is responsible for managing port forwarding, established in its OpenWrt interface, including DNS, FTP, Web Traffic, HTTPS, and DHCP.
+•	The router serves as the central hub for all data transfers and operating activities of the machines.
+•	It manages WAN traffic and utilizes the port forward to route traffic efficiently.
+•	The router separates the network into two subnets, on which the machines operate.
+
+Corp40 Switch 1:
+•	The switch connects Machine 3 to the router, facilitating communication between the two devices.
+
+Corp40 Machine 3:
+•	This machine runs Windows 10 and servers as an interface for various operations. 
+•	It is used to access the router’s OpenWrt interface via web browser.
+•	A remote desktop connection is established on this machine, allowing a wireless client to access it.
+•	Machine 3 serves as a test computer in many respects and represents how one could configure a machine.
+
+WAP:
+•	WAP is responsible for projecting a wireless signal, allowing devices to connect wirelessly.
+•	When a machine is connected to the WAP, it allows the user to utilize remote desktop and access Machine 3 as an Active Directory user.
+Connection Services
+
+DNS:
+•	Machine 1 runs the DNS and is responsible for routing traffic based on the destination.
+•	The DNS installation was completed by adding a feature to the server manager.
+•	To enable access to different hosts, DNS host records had to be created on Machine 1 to direct the traffic to the correct location.
+•	A port forward was established to send outside traffic from the router to Machine 1, allowing the DNS record to be utilized for routing.
+
+DHCP: 
+•	The DHCP is responsible for configuring Machine 3 and distributing it across the network.
+•	It enabled IP addresses to be dynamic and still recognized on the network. 
+•	To set up the server, we had to configure the router and manually create a new DHCP server.
+•	We also configured our own DNS and network settings until the DHCP server was operating correctly. 
+
+Active Directory: 
+•	Machine 1 has Active Directory installed, which is a server feature integrated into the Windows software.
+•	Configuring Active Directory enables the assignment of roles and responsibilities to different users and machines.
+•	It provides the ability to select administrators and device access permissions.
+•	The Ubuntu server is configured to join the Active Directory using the command terminal.
+•	This integration allows a secure access to the network, approving a user as needed.
+
+FTP Server:
+•	Machine 2, running Ubuntu, has the FTP server configured.
+•	To use the FTP functions, we first installed the FTP package.
+•	A directory was created to store files that were transferred over the network.
+•	The server was configured to allow specific users access to it.
+•	A port forward was created to route external traffic to a DNS record on Machine 1, which then directs information to Machine 2 where the FTP server operates.
+
+Remote Desktop:
+•	Remote desktops were configured on all machines to allow remote access. 
+•	On Machine 3, the remote desktop feature was enabled, and a port forward was set up to allow external traffic.
+•	A DNS host record was created on Machine 1 to route traffic to Machine 3.
+•	Users were authenticated using their existing Active Directory credentials.
+
+Email Server:
+•	We installed two programs on Machine 1 to create an email server: Exchange, which is responsible for managing its configuration and maintenance, and another program to handle SMTP communication.
+•	To allow external emails to reach the email server, we created MX records on Machine 1 to route traffic to the DNS record that was created.
+•	We set up a mailbox on the email server, to send and receive emails both internally and externally. 
